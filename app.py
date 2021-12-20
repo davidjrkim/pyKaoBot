@@ -53,7 +53,7 @@ def SendReturn(hwnd):
     time.sleep(0.01)
     win32api.PostMessage(hwnd, win32con.WM_KEYUP, win32con.VK_RETURN, 0)
 
-## 이미지 다운로드
+## 이미지 다운로드 (web scraping)
 def downloadImg():
     my_url = Request('https://www.bible.com/ko/verse-of-the-day/', headers={'User-Agent': 'Mozilla/5.0'})
     uClient = uReq(my_url)
@@ -65,6 +65,7 @@ def downloadImg():
     page_soup = soup(page_html, "html.parser")
     bible_img = page_soup.findAll("amp-img",{"sizes":"(max-width: 385px) 320px, 640px"})
     bible_url = bible_img[-1]["src"].replace("320x320", "1280x1280")
+    print(bible_url)
     urllib.request.urlretrieve("https:"+bible_url, "C:/Users/david/Downloads/todaysbible"+str(currentDate)+".jpg")
     return True
 
@@ -114,7 +115,7 @@ def main():
     kakao_sendtext(kakao_opentalk_name, text)    # 메시지 전송
 
 if __name__ == '__main__':
-    schedule.every().day.at("07:00").do(main)
+    schedule.every().day.at("07:00").do(main)   # 스케줄 라이브러리 set 시간에 main()함수 실행
 
     while True:
         schedule.run_pending()

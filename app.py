@@ -11,7 +11,7 @@ import urllib
 
 
 # # 카톡창 이름, (활성화 상태의 열려있는 창)
-kakao_opentalk_name = '김데이빗'
+kakao_opentalk_name = '👉청년부 잡담방👈'
 
 
 # # 채팅방에 메시지 전송
@@ -25,6 +25,8 @@ def kakao_sendtext(chatroom_name, text):
     pressPaste()
     time.sleep(0.01)
     returnPaste()
+
+    print("sent")
 
 
 # # 붙여넣기
@@ -58,6 +60,8 @@ def downloadImg():
     page_html = uClient.read()
     uClient.close()
     currentDate = datetime.now().date()
+    currentDateTime = datetime.now()
+    print("downLoad "+str(currentDateTime))
     page_soup = soup(page_html, "html.parser")
     bible_img = page_soup.findAll("amp-img",{"sizes":"(max-width: 385px) 320px, 640px"})
     bible_url = bible_img[-1]["src"].replace("320x320", "1280x1280")
@@ -89,6 +93,8 @@ def send_to_clipboard(clip_type, data):
 
 def fileCopy():
     currentDate = datetime.now().date()
+    currentDateTime = datetime.now()
+    print(currentDateTime)
 
     filepath = 'C:/Users/david/Downloads/todaysbible' + str(currentDate) + '.jpg'
     image = Image.open(filepath)
@@ -108,9 +114,9 @@ def main():
     kakao_sendtext(kakao_opentalk_name, text)    # 메시지 전송
 
 if __name__ == '__main__':
-    schedule.every().day.at("16:54").do(main)
+    schedule.every().day.at("07:00").do(main)
 
     while True:
         schedule.run_pending()
-
+ 
         time.sleep(1)
